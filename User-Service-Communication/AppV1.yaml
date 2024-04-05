@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ua-app-v1
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ua-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ua-app
+        version: v1
+        istio: monitor
+    spec:
+      containers:
+        - image: rekhugopal/eksistiodemo:latest
+          imagePullPolicy: Always
+          name: ua-app
+          env:
+            - name: SERVICE
+              value: ua-app
+            - name: VERSION
+              value: v1
+          ports:
+            - name: http
+              containerPort: 8080

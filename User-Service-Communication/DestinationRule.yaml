@@ -1,0 +1,17 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: ua-app
+  namespace: production
+spec:
+  host: ua-app
+  subsets:
+    - name: v1
+      labels:
+        app: ua-app
+        version: v1
+    - name: v2
+      labels:
+        app: ua-app
+        version: v2

@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ss-app-v1
+  namespace: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ss-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: ss-app
+        version: v1
+        istio: monitor
+    spec:
+      containers:
+        - image: rekhugopal/eksistiodemo:latest
+          imagePullPolicy: Always
+          name: ss-app
+          env:
+            - name: SERVICE
+              value: ss-app
+            - name: VERSION
+              value: v1
+          ports:
+            - name: http
+              containerPort: 8080
